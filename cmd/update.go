@@ -21,6 +21,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var programVariables map[string]string = map[string]string{
+	"imageSavePath": "",
+}
+
 // updateCmd represents the update command
 var updateCmd = &cobra.Command{
 	Use:   "update",
@@ -37,6 +41,13 @@ to quickly create a Cobra application.`,
 			return
 		}
 
+		switch args[0] {
+		case "path":
+			programVariables["imageSavePath"] = args[1]
+		default:
+			fmt.Printf("Error: There is no variable with tha name \"%v\"", args[0])
+			return
+		}
 	},
 }
 
