@@ -54,7 +54,7 @@ There needs to be four arguments that are ordered like this: image id, image tit
 image descreption, and image url. `,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) != 4 {
-			fmt.Println("Error:Invalid number of parameters. Try running add -h for help.")
+			fmt.Println("Error: Invalid number of parameters. Try running add -h for help.")
 			return
 		}
 
@@ -63,6 +63,14 @@ image descreption, and image url. `,
 			Title:          args[1],
 			Description:    args[2],
 			ImageOnlineUrl: args[3],
+		}
+
+		images := getImages()
+		for _, img := range images {
+			if img.Id == newImage.Id {
+				fmt.Println("Error: Image id must be a unique number")
+				return
+			}
 		}
 
 		// download the image

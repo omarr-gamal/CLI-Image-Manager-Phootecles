@@ -52,16 +52,13 @@ func getImages() (images []Image) {
 var getCmd = &cobra.Command{
 	Use:   "get",
 	Short: "Use this command to get images.",
-	Long: `‘Use this command to get a list of all images in your image collection.
-A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Long: `‘Use this command to get a list of all images in your image collection, 
+use get all to get a list of all images. 
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Alternatively, use get <image_id> to get that specific image.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) != 1 {
-			fmt.Println("Error:Invalid number of parameters. Try running get -h for help.")
+			fmt.Println("Error: Invalid number of parameters. Try running get -h for help.")
 			return
 		}
 
@@ -73,7 +70,7 @@ to quickly create a Cobra application.`,
 			fmt.Printf("Number of images is %v", len(images))
 		} else {
 			if !isNumber(args[0]) {
-				fmt.Println("Error:Invalid image id.")
+				fmt.Println("Error: Invalid image id.")
 				return
 			}
 			images := getImages()
@@ -83,7 +80,7 @@ to quickly create a Cobra application.`,
 					return
 				}
 			}
-			fmt.Printf("Error:Couldn't find image with id \"%v\"", args[0])
+			fmt.Printf("Error: Couldn't find image with id \"%v\"", args[0])
 		}
 
 	},
