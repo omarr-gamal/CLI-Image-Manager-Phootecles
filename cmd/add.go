@@ -44,15 +44,17 @@ func saveImages(images []Image) {
 var addCmd = &cobra.Command{
 	Use:   "add",
 	Short: "Use this command to create and add images.",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Long: `This command lets you create and add a new image to the 
+image collection. Example:
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+add "001" "Mount Fuji" "this active volcano is a very distinctive feature of the geography 
+of Japan...." "https://upload.wikimedia.org/wikipedia/commons/1/1b/080103_hakkai_fuji.jpg"
+
+There needs to be four arguments that are ordered like this: image id, image title, 
+image descreption, and image url. `,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) != 4 {
-			fmt.Println("invalid add command")
+			fmt.Println("Error:Invalid number of parameters. Try running add -h for help.")
 			return
 		}
 

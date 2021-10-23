@@ -54,23 +54,19 @@ func getImages() (images []Image) {
 var getCmd = &cobra.Command{
 	Use:   "get",
 	Short: "Use this command to get images.",
-	Long: `A longer description that spans multiple lines and likely contains examples
+	Long: `‘Use this command to get a list of all images in your image collection.
+A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// fmt.Printf("%v args\n", len(args))
-		// fmt.Printf("%v", args[0])
-
-		// ims := getImages()
-		// println(len(ims))
-
 		var gopherName = "dr-who.png"
 
-		if len(args) >= 1 && args[0] != "" {
-			gopherName = args[0]
+		if len(args) != 1 {
+			fmt.Println("Error:Invalid number of parameters. Try running get -h for help.")
+			return
 		}
 
 		URL := "https://github.com/scraly/gophers/raw/main/" + gopherName + ".png"
