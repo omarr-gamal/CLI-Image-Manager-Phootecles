@@ -82,7 +82,7 @@ image descreption, and image url. `,
 
 		if response.StatusCode == 200 {
 			// create the image file
-			out, err := os.Create(newImage.Id + "_" + newImage.Title + ".png")
+			out, err := os.Create("C:/Users/Lenovo/Desktop/" + newImage.Id + "_" + newImage.Title + ".png")
 			if err != nil {
 				fmt.Println(err)
 			}
