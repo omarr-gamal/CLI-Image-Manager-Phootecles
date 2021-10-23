@@ -16,8 +16,10 @@ limitations under the License.
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"os"
 
@@ -29,6 +31,23 @@ type Image struct {
 	Title          string
 	Description    string
 	ImageOnlineUrl string
+}
+
+func getImages() (images []Image) {
+
+	fileBytes, err := ioutil.ReadFile("./images.json")
+
+	if err != nil {
+		panic(err)
+	}
+
+	err = json.Unmarshal(fileBytes, &images)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return images
 }
 
 // getCmd represents the get command
@@ -43,6 +62,10 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// fmt.Printf("%v args\n", len(args))
+		// fmt.Printf("%v", args[0])
+
+		// ims := getImages()
+		// println(len(ims))
 
 		var gopherName = "dr-who.png"
 
