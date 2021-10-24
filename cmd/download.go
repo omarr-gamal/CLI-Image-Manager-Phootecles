@@ -49,7 +49,14 @@ to quickly create a Cobra application.`,
 				downloadAndSaveImage(img)
 			}
 		} else {
-
+			images := getImages()
+			for _, img := range images {
+				if img.Id == args[0] {
+					downloadAndSaveImage(img)
+					return
+				}
+			}
+			fmt.Printf("Error: Couldn't find image with the id: %v\n", args[0])
 		}
 	},
 }
@@ -83,6 +90,6 @@ func downloadAndSaveImage(img Image) {
 
 		fmt.Printf("Successfully downloaded %v%v...\n", img.Id, img.Title)
 	} else {
-		panic("Unexpected error happened")
+		fmt.Printf("Unexpected error happened")
 	}
 }

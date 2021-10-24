@@ -62,18 +62,15 @@ image descreption, and image url. `,
 			ImageOnlineUrl: args[3],
 		}
 
-		images := getImages()
-		for _, img := range images {
-			if img.Id == newImage.Id {
-				fmt.Println("Error: Image id must be a unique number")
-				return
-			}
+		if isIdUsed(newImage.Id) {
+			panic("Error: Image id must be unique and a number")
 		}
 
 		getConfigs()
 
 		downloadAndSaveImage(newImage)
 
+		images := getImages()
 		images = append(images, newImage)
 
 		saveImages(images)
@@ -83,4 +80,14 @@ image descreption, and image url. `,
 
 func init() {
 	rootCmd.AddCommand(addCmd)
+}
+
+func isIdUsed(id string) bool {
+	images := getImages()
+	for _, img := range images {
+		if img.Id == id {
+			return true
+		}
+	}
+	return false
 }
