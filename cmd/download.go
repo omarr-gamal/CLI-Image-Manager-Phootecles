@@ -17,6 +17,9 @@ package cmd
 
 import (
 	"fmt"
+	"io"
+	"net/http"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -32,10 +35,54 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("download called")
+		if len(args) != 1 {
+			fmt.Println("Error: Invalid number of parameters. Try running download -h for help.")
+			return
+		}
+
+		getConfigs()
+
+		if args[0] == "all" {
+			images := getImages()
+			for _, img := range images {
+				fmt.Printf("Downloading %v%v...\n", img.Id, img.Title)
+				downloadAndSaveImage(img)
+			}
+		} else {
+
+		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(downloadCmd)
+}
+
+func downloadAndSaveImage(img Image) {
+	// download the image
+	response, err := http.Get(img.ImageOnlineUrl)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode == 200 {
+
+		// create the image file
+		out, err := os.Create(programVariables["imageSavePath"] + img.Id + "_" + img.Title + ".png")
+		if err != nil {
+			fmt.Println(err)
+		}
+		defer out.Close()
+
+		// write the body to file
+		_, err = io.Copy(out, response.Body)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		fmt.Printf("Successfully downloaded %v%v...\n", img.Id, img.Title)
+	} else {
+		panic("Unexpected error happened")
+	}
 }
