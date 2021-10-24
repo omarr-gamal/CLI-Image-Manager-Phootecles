@@ -28,12 +28,16 @@ import (
 var downloadCmd = &cobra.Command{
 	Use:   "download",
 	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Long: `Use this command to download one image or all the images 
+in your collection. 
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Example: download all 
+This command will redownload all the images 
+Example: download 177 
+This command will downlaod the image with id 177
+
+To change or view the download diretory, try "update -h" or "list -h" 
+respectively.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) != 1 {
 			fmt.Println("Error: Invalid number of parameters. Try running download -h for help.")
