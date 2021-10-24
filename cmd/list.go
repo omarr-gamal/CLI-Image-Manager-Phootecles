@@ -16,7 +16,9 @@ limitations under the License.
 package cmd
 
 import (
+	"encoding/gob"
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -24,25 +26,28 @@ import (
 // listCmd represents the list command
 var listCmd = &cobra.Command{
 	Use:   "list",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Use this command to list the variables that the program use",
+	Long: `Use this command to get a list of the variables that the program
+uses if you need to configure them. Such variables include the path 
+which new images are downloaded to.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) != 0 {
 			fmt.Println("Error: Invalid number of parameters. Try running list -h for help.")
 			return
 		}
 
-		switch args[0] {
-		case "path":
-			programVariables["imageSavePath"] = args[1]
-		default:
-			fmt.Printf("Error: There is no variable with tha name \"%v\"", args[0])
-			return
+		decodeFile, err := os.Open("config.gob")
+		if err != nil {
+			panic(err)
+		}
+		defer decodeFile.Close()
+
+		decoder := gob.NewDecoder(decodeFile)
+
+		decoder.Decode(&programVariables)
+
+		for key, value := range programVariables {
+			fmt.Printf("%v: %v\n", key, value)
 		}
 	},
 }

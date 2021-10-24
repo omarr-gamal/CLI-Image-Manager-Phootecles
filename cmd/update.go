@@ -16,7 +16,9 @@ limitations under the License.
 package cmd
 
 import (
+	"encoding/gob"
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -28,25 +30,39 @@ var programVariables map[string]string = map[string]string{
 // updateCmd represents the update command
 var updateCmd = &cobra.Command{
 	Use:   "update",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Use this command to configure the program variables",
+	Long: `This command lets you change the values that the program 
+uses such as the path that new images are downloaded in.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Use it like this: update <varName> <value>
+
+Example: update imageSavePath "C:/Users/Hp/Desktop/"
+
+Note: it's important not to forget the "/" at the end.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) != 2 {
 			fmt.Println("Error: Invalid number of parameters. Try running update -h for help.")
 			return
 		}
 
-		switch args[0] {
-		case "path":
-			programVariables["imageSavePath"] = args[1]
-		default:
-			fmt.Printf("Error: There is no variable with tha name \"%v\"", args[0])
-			return
+		for key := range programVariables {
+			if key == args[0] {
+				// fmt.Printf("1: %v, 2: %v\n", args[0], args[1])
+				// fmt.Println(programVariables[args[0]])
+				programVariables[args[0]] = args[1]
+
+				encodeFile, err := os.Create("config.gob")
+				if err != nil {
+					panic(err)
+				}
+				encoder := gob.NewEncoder(encodeFile)
+
+				if err := encoder.Encode(programVariables); err != nil {
+					panic(err)
+				}
+				encodeFile.Close()
+			}
+			fmt.Printf("Successfully updated %v to become %v\n", key, args[1])
 		}
 	},
 }
