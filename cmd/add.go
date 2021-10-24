@@ -82,6 +82,7 @@ image descreption, and image url. `,
 
 		if response.StatusCode == 200 {
 			// create the image file
+			getConfigs()
 			out, err := os.Create(programVariables["imageSavePath"] + newImage.Id + "_" + newImage.Title + ".png")
 			if err != nil {
 				fmt.Println(err)

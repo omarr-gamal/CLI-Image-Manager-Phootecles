@@ -36,15 +36,7 @@ which new images are downloaded to.`,
 			return
 		}
 
-		decodeFile, err := os.Open("config.gob")
-		if err != nil {
-			panic(err)
-		}
-		defer decodeFile.Close()
-
-		decoder := gob.NewDecoder(decodeFile)
-
-		decoder.Decode(&programVariables)
+		getConfigs()
 
 		for key, value := range programVariables {
 			fmt.Printf("%v: %v\n", key, value)
@@ -54,4 +46,16 @@ which new images are downloaded to.`,
 
 func init() {
 	rootCmd.AddCommand(listCmd)
+}
+
+func getConfigs() {
+	decodeFile, err := os.Open("config.gob")
+	if err != nil {
+		panic(err)
+	}
+	defer decodeFile.Close()
+
+	decoder := gob.NewDecoder(decodeFile)
+
+	decoder.Decode(&programVariables)
 }
