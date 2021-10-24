@@ -4,14 +4,24 @@ Phootecles is a Command Line Application that manages photo collections on your 
 
 ## Insatlling Phootecles
 
-To use this command line tool, you need to install the two dependencies below.
+Before installing Phootecles, you need to have Go installed first.
 
-### Installign Dependencies
+### Installing Go
 
-#### Go
+To install the latest version of Go, follow the instructions on their [website](https://golang.org/dl/).
 
-First, you should install Go by following the instructions on their [website](https://golang.org/dl/).
+### Installing Phootecles
 
-#### Cobra
+After installing go, you can clone this repo, open a terminal, navigate to the cloned folder, and enter the command
 
-Second, you need to install Cobra
+```bash
+go install
+```
+
+Now check that Phootecles is installed by typing
+
+```bash
+phootecles
+```
+
+anywhere in your terminal.
