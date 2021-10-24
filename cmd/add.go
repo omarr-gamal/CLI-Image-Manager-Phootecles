@@ -18,10 +18,7 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"io/ioutil"
-	"net/http"
-	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -73,37 +70,14 @@ image descreption, and image url. `,
 			}
 		}
 
-		// download the image
-		response, err := http.Get(newImage.ImageOnlineUrl)
-		if err != nil {
-			fmt.Println(err)
-		}
-		defer response.Body.Close()
+		getConfigs()
 
-		if response.StatusCode == 200 {
-			// create the image file
-			getConfigs()
-			out, err := os.Create(programVariables["imageSavePath"] + newImage.Id + "_" + newImage.Title + ".png")
-			if err != nil {
-				fmt.Println(err)
-			}
-			defer out.Close()
+		downloadAndSaveImage(newImage)
 
-			// write the body to file
-			_, err = io.Copy(out, response.Body)
-			if err != nil {
-				fmt.Println(err)
-			}
+		images = append(images, newImage)
 
-			images := getImages()
-			images = append(images, newImage)
+		saveImages(images)
 
-			saveImages(images)
-
-			fmt.Println("Successfully created image file")
-		} else {
-			fmt.Println("Unexpected error happened")
-		}
 	},
 }
 
