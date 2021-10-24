@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "go_project.com/cmd"
+import "phootecles/cmd"
 
 func main() {
 	cmd.Execute()

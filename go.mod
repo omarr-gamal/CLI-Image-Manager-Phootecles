@@ -1,4 +1,4 @@
-module go_project.com
+module phootecles
 
 go 1.17
 

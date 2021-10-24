@@ -28,14 +28,12 @@ var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "go_project.com",
+	Use:   "phootecles",
 	Short: "command line interface application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Long: `phootecles is a command line application that manages photos.
+You can download photos from URLs and save them using the command
+add, you can configure where the photos are saved. You can add 
+Information about the photos like a description and a title.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
