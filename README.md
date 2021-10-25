@@ -28,13 +28,23 @@ anywhere in your terminal.
 
 ## Using Phootecles
 
+### Creating new Images
+
 Now try adding a new image by running
 
 ```bash
 phootecles add "001" "Mount Fuji" "this active volcano is a very distinctive feature of the geography of Japan...." "https://upload.wikimedia.org/wikipedia/commons/1/1b/080103_hakkai_fuji.jpg"
 ```
 
-Now check the image is indeed added
+You should get the responce:
+
+```bash
+Successfully downloaded 002Mount Fuji
+```
+
+You can check that the image is indeed downloaded in the folder where Phootecles downloads new images; you can choose where you want that location to be; check Configuring Phootecles section.
+
+Now check the image is added
 
 ```bash
 phootecles get all
@@ -50,6 +60,8 @@ url:https://upload.wikimedia.org/wikipedia/commons/1/1b/080103_hakkai_fuji.jpg
 ---------------
 Number of images is 1
 ```
+
+### Configuring Phootecles
 
 You can change the directory that images are saved to by running
 
@@ -78,3 +90,27 @@ Successfully updated imageSavePath to become C:/Users/Hp/Desktop/
 ```
 
 Now when a new image is downloaded it will be saved in the desktop
+
+### Downloading The Images Again if You Want
+
+You can use the command `download` to download the images that you added again when you want. So run:
+
+```bash
+phootecles download 001
+```
+
+You should get the following responce:
+
+```bash
+Successfully downloaded 001Mount Fuji
+```
+
+and you should find the image downloaded in the `imageSavePath`
+
+You can also run:
+
+```bash
+phootecles download all
+```
+
+This will download all the images that are added.
