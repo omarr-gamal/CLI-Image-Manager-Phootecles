@@ -114,3 +114,21 @@ phootecles download all
 ```
 
 This will download all the images that are added.
+
+### Deleting Images
+
+You can delete an image using the command delete and passing the id of the image that you want to delete like this:
+
+```bash
+phootecles delete 001
+```
+
+If there was an image with the id `001` then it will be deleted.
+
+You can also delete `all` images by typing all instead of the image id:
+
+```bash
+phootecles delete all
+```
+
+This will delete all the images that you have.
