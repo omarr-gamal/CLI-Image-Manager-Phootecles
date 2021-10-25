@@ -25,3 +25,19 @@ phootecles
 ```
 
 anywhere in your terminal.
+
+## Using Phootecles
+
+Now try adding a new image by running
+
+```bash
+phootecles add "001" "Mount Fuji" "this active volcano is a very distinctive feature of the geography
+of Japan...." "https://upload.wikimedia.org/wikipedia/commons/1/1b/080103_hakkai_fuji.jpg"
+```
+
+Now check the image is indeed added
+
+```bash
+phootecles add "001" "Mount Fuji" "this active volcano is a very distinctive feature of the geography
+of Japan...." "https://upload.wikimedia.org/wikipedia/commons/1/1b/080103_hakkai_fuji.jpg"
+```

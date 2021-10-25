@@ -17,6 +17,7 @@ package cmd
 
 import (
 	"encoding/gob"
+	"errors"
 	"fmt"
 	"os"
 
@@ -49,6 +50,19 @@ func init() {
 }
 
 func getConfigs() {
+	if _, err := os.Stat("config.gob"); errors.Is(err, os.ErrNotExist) {
+		encodeFile, err := os.Create("config.gob")
+		if err != nil {
+			panic(err)
+		}
+		encoder := gob.NewEncoder(encodeFile)
+
+		if err := encoder.Encode(programVariables); err != nil {
+			panic(err)
+		}
+		encodeFile.Close()
+	}
+
 	decodeFile, err := os.Open("config.gob")
 	if err != nil {
 		panic(err)

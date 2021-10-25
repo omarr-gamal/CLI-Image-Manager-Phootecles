@@ -17,8 +17,10 @@ package cmd
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
+	"os"
 	"unicode"
 
 	"github.com/spf13/cobra"
@@ -32,6 +34,10 @@ type Image struct {
 }
 
 func getImages() (images []Image) {
+	if _, err := os.Stat("./images.json"); errors.Is(err, os.ErrNotExist) {
+		imageSlice := make([]Image, 0)
+		saveImages(imageSlice)
+	}
 
 	fileBytes, err := ioutil.ReadFile("./images.json")
 
