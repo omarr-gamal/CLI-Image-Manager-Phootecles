@@ -49,7 +49,12 @@ Note: it's important not to forget the "/" at the end.`,
 			if key == args[0] {
 				// fmt.Printf("1: %v, 2: %v\n", args[0], args[1])
 				// fmt.Println(programVariables[args[0]])
-				programVariables[args[0]] = args[1]
+				newValue := args[1]
+				if newValue[len(newValue)-1] != '/' {
+					newValue = newValue + "/"
+				}
+
+				programVariables[args[0]] = newValue
 
 				encodeFile, err := os.Create("config.gob")
 				if err != nil {

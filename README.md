@@ -39,3 +39,42 @@ Now check the image is indeed added
 ```bash
 phootecles get all
 ```
+
+You should get the following responce:
+
+```bash
+id:001
+title:Mount Fuji
+description:this active volcano is a very distinctive feature of the geography of Japan....
+url:https://upload.wikimedia.org/wikipedia/commons/1/1b/080103_hakkai_fuji.jpg
+---------------
+Number of images is 1
+```
+
+You can change the directory that images are saved to by running
+
+```bash
+phootecles list
+```
+
+You should get the following responce:
+
+```bash
+imageSavePath: ./
+```
+
+The list commands lists all variables that Phootecles uses that you can configure.
+
+To change the `imageSavePath` you can run
+
+```bash
+phootecles update imageSavePath C:/Users/Hp/Desktop/
+```
+
+You should get the following responce:
+
+```bash
+Successfully updated imageSavePath to become C:/Users/Hp/Desktop/
+```
+
+Now when a new image is downloaded it will be saved in the desktop
