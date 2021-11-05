@@ -128,6 +128,7 @@ image descreption, and image url. `,
 			Title:          args[1],
 			Description:    args[2],
 			ImageOnlineUrl: args[3],
+			InsideText:     "",
 		}
 
 		if isIdUsed(newImage.Id) {
@@ -143,10 +144,13 @@ image descreption, and image url. `,
 
 		waitGroup.Add(1)
 		go downloadAndSaveImage(newImage)
-		waitGroup.Wait()
 
-		waitGroup.Add(1)
-		go setInsideTextForImage(newImage)
+		ocr, _ := cmd.Flags().GetBool("ocr")
+		if ocr {
+			waitGroup.Add(1)
+			go setInsideTextForImage(newImage)
+		}
+
 		waitGroup.Wait()
 
 	},
@@ -154,6 +158,7 @@ image descreption, and image url. `,
 
 func init() {
 	rootCmd.AddCommand(addCmd)
+	addCmd.Flags().Bool("ocr", false, "Use this flag to specify whether you want to use OCR")
 }
 
 func isIdUsed(id string) bool {
