@@ -142,8 +142,11 @@ image descreption, and image url. `,
 
 		saveImages(images)
 
-		waitGroup.Add(1)
-		go downloadAndSaveImage(newImage)
+		download, _ := cmd.Flags().GetBool("download")
+		if download {
+			waitGroup.Add(1)
+			go downloadAndSaveImage(newImage)
+		}
 
 		ocr, _ := cmd.Flags().GetBool("ocr")
 		if ocr {
@@ -159,6 +162,7 @@ image descreption, and image url. `,
 func init() {
 	rootCmd.AddCommand(addCmd)
 	addCmd.Flags().Bool("ocr", false, "Use this flag to specify whether you want to use OCR")
+	addCmd.Flags().Bool("download", false, "Use this flag to specify whether you want to download the image as well")
 }
 
 func isIdUsed(id string) bool {
