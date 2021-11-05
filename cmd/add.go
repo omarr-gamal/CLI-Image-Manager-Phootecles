@@ -24,18 +24,26 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func getTextFromImage(image Image) string {
+func getTextFromImage(image Image) {
 	imageUrl := image.ImageOnlineUrl
 
 	// change / to %2F and : to %3A in s
-	// loop through s and replace all instances of "/" with "%2F"
-	// loop through s and replace all instances of ":" with "%3A"
+	// loop through and replace all instances of "/" with "%2F"
+	// loop through and replace all instances of ":" with "%3A"
+	// loop through and replace all instances of "@" with "%40"
+	// loop through and replace all instances of "#" with "%23"
 	for i := 0; i < len(imageUrl); i++ {
 		if imageUrl[i] == '/' {
 			imageUrl = imageUrl[:i] + "%2F" + imageUrl[i+1:]
 		}
 		if imageUrl[i] == ':' {
 			imageUrl = imageUrl[:i] + "%3A" + imageUrl[i+1:]
+		}
+		if imageUrl[i] == '@' {
+			imageUrl = imageUrl[:i] + "%40" + imageUrl[i+1:]
+		}
+		if imageUrl[i] == '#' {
+			imageUrl = imageUrl[:i] + "%23" + imageUrl[i+1:]
 		}
 	}
 
@@ -51,23 +59,22 @@ func getTextFromImage(image Image) string {
 	// check error
 	if err != nil {
 		fmt.Println(err)
-		return ""
+		image.InsideText = ""
 	}
 
 	// check for errors in the response
 	if res.StatusCode != 200 {
+		image.InsideText = ""
 		if res.Header.Get("x-ratelimit-requests-remaining") == "0" {
 			fmt.Println("Warning: Phootecles is out of api requests to extract text from images.")
-			return ""
 		}
 		fmt.Println("Error: ", res.StatusCode)
-		return ""
 	}
 
 	defer res.Body.Close()
 	body, _ := ioutil.ReadAll(res.Body)
 
-	return string(body)
+	image.InsideText = string(body)
 }
 
 func saveImages(images []Image) {

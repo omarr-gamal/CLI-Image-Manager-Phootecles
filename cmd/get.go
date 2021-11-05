@@ -31,6 +31,7 @@ type Image struct {
 	Title          string
 	Description    string
 	ImageOnlineUrl string
+	InsideText     string
 }
 
 func getImages() (images []Image) {
@@ -110,6 +111,7 @@ func formatImage(img Image) {
 	fmt.Printf("title:%v\n", img.Title)
 	fmt.Printf("description:%v\n", img.Description)
 	fmt.Printf("url:%v\n", img.ImageOnlineUrl)
+	fmt.Printf("inside text:%v\n", img.InsideText)
 	println("---------------")
 }
 
