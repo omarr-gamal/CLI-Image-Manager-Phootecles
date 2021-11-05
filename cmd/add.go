@@ -19,9 +19,37 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"net/http"
 
 	"github.com/spf13/cobra"
 )
+
+func getTextFromImage(Image Image) {
+	url := "https://ocrly-image-to-text.p.rapidapi.com/?imageurl=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F42%2F1b%2Fe6%2F421be6184e75937bb223c764ecbc2f2e.jpg&filename=sample.jpg"
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("x-rapidapi-host", "ocrly-image-to-text.p.rapidapi.com")
+	req.Header.Add("x-rapidapi-key", "ecfe9f08eamsh1a4d4986842b72cp1a60b5jsn497b0c7c1d2f")
+
+	res, err := http.DefaultClient.Do(req)
+
+	// check error
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	// check for errors in the response
+	if res.StatusCode != 200 {
+		fmt.Println("Error: ", res.StatusCode)
+	}
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+}
 
 func saveImages(images []Image) {
 
