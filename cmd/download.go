@@ -96,4 +96,6 @@ func downloadAndSaveImage(img Image) {
 	} else {
 		fmt.Printf("Unexpected error happened")
 	}
+
+	waitGroup.Done()
 }

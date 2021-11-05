@@ -20,11 +20,14 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"sync"
 
 	"github.com/spf13/cobra"
 )
 
-func getTextFromImage(image Image) {
+var waitGroup = sync.WaitGroup{}
+
+func setInsideTextForImage(image Image) {
 	imageUrl := image.ImageOnlineUrl
 
 	// change / to %2F and : to %3A in s
@@ -75,6 +78,17 @@ func getTextFromImage(image Image) {
 	body, _ := ioutil.ReadAll(res.Body)
 
 	image.InsideText = string(body)
+
+	// loop through images and replace the image with the new one
+	images := getImages()
+	for i, img := range images {
+		if img.Id == image.Id {
+			images[i] = image
+		}
+	}
+	saveImages(images)
+
+	waitGroup.Done()
 }
 
 func saveImages(images []Image) {
@@ -122,12 +136,18 @@ image descreption, and image url. `,
 
 		getConfigs()
 
-		downloadAndSaveImage(newImage)
-
 		images := getImages()
 		images = append(images, newImage)
 
 		saveImages(images)
+
+		waitGroup.Add(1)
+		go downloadAndSaveImage(newImage)
+		waitGroup.Wait()
+
+		waitGroup.Add(1)
+		go setInsideTextForImage(newImage)
+		waitGroup.Wait()
 
 	},
 }
