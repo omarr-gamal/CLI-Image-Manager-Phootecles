@@ -25,23 +25,24 @@ import (
 // searchCmd represents the search command
 var searchCmd = &cobra.Command{
 	Use:   "search",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Use this command to search your images",
+	Long: `You can search your images by using this command. For example:
+	
+Phootecles search "40" "speed" "mountain"
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+After the command search write the all the terms you want to
+search for. In the above example Phootecles will return all
+images that contain either of the terms "40" or "speed" or
+"mountain" in their description or title or inner text.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("search called")
-
 		// loop through all images and store images that contain the search term
 		result := []Image{}
 		images := getImages()
 		for _, image := range images {
 			// loop through all args
 			for _, arg := range args {
-				// make string lowercase
+				// make strings lowercase
 				if strings.Contains(strings.ToLower(image.Title), strings.ToLower(arg)) {
 					result = append(result, image)
 				}
