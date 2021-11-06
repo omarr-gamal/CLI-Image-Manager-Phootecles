@@ -27,7 +27,7 @@ var searchCmd = &cobra.Command{
 	Use:   "search",
 	Short: "Use this command to search your images",
 	Long: `You can search your images by using this command. For example:
-	
+
 Phootecles search "40" "speed" "mountain"
 
 After the command search write the all the terms you want to
@@ -35,7 +35,11 @@ search for. In the above example Phootecles will return all
 images that contain either of the terms "40" or "speed" or
 "mountain" in their description or title or inner text.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("search called")
+		if len(args) == 0 {
+			fmt.Println("You must provide at least one search term")
+			return
+		}
+
 		// loop through all images and store images that contain the search term
 		result := []Image{}
 		images := getImages()
@@ -43,12 +47,21 @@ images that contain either of the terms "40" or "speed" or
 			// loop through all args
 			for _, arg := range args {
 				// make strings lowercase
-				if strings.Contains(strings.ToLower(image.Title), strings.ToLower(arg)) {
+				if strings.Contains(strings.ToLower(image.Title), strings.ToLower(arg)) ||
+					strings.Contains(strings.ToLower(image.Description), strings.ToLower(arg)) ||
+					strings.Contains(strings.ToLower(image.InsideText), strings.ToLower(arg)) ||
+					strings.Contains(strings.ToLower(image.Id), strings.ToLower(arg)) {
+
 					result = append(result, image)
 				}
 			}
 		}
 
+		// print the results
+		for _, image := range result {
+			formatImage(image)
+		}
+		fmt.Printf("Found %v matching images", len(result))
 	},
 }
 
