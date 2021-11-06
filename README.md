@@ -1,6 +1,8 @@
 # CLI Image Manager Phootecles
 
-Phootecles is a Command Line Application that manages photo collections on your local machine. It downloads images and stores information like description and online URL. It is written in Go and uses Cobra library.
+Phootecles is a Command Line Application that manages photo on your local machine. You can add an image, download it, store information such as title, description, online URL, you can extract the text from the image. You can search through your images, delete them, etc. It is written in Go.
+
+Phootecles encodes object lists into json files, serializes maps, uses external packages and libraries such as Cobra, communicates with APIs to perform complex tasks, and uses Goroutines to run demanding operations in parallel.
 
 ## Insatlling Phootecles
 
