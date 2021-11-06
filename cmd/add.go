@@ -141,6 +141,7 @@ image descreption, and image url. `,
 		images = append(images, newImage)
 
 		saveImages(images)
+		fmt.Printf("Successfully added %v%v...\n", newImage.Id, newImage.Title)
 
 		download, _ := cmd.Flags().GetBool("download")
 		if download {

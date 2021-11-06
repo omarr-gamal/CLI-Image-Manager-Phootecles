@@ -33,14 +33,17 @@ anywhere in your terminal.
 Now try adding a new image by running
 
 ```bash
-phootecles add "001" "Mount Fuji" "this active volcano is a very distinctive feature of the geography of Japan...." "https://upload.wikimedia.org/wikipedia/commons/1/1b/080103_hakkai_fuji.jpg"
+phootecles add "001" "Mount Fuji" "this active volcano is a very distinctive feature of the geography of Japan...." "https://upload.wikimedia.org/wikipedia/commons/1/1b/080103_hakkai_fuji.jpg" --download
 ```
 
 You should get the responce:
 
 ```bash
+Successfully added 002Mount Fuji
 Successfully downloaded 002Mount Fuji
 ```
+
+The `--download` flag means that Phootecles will download the image after adding it.
 
 You can check that the image is indeed downloaded in the folder where Phootecles downloads new images; you can choose where you want that location to be; check Configuring Phootecles section.
 
@@ -57,9 +60,22 @@ id:001
 title:Mount Fuji
 description:this active volcano is a very distinctive feature of the geography of Japan....
 url:https://upload.wikimedia.org/wikipedia/commons/1/1b/080103_hakkai_fuji.jpg
+inside text:
 ---------------
 Number of images is 1
 ```
+
+#### Apply Optical Character Recognition to the image
+
+When adding a new image, you can use the flag `--ocr` which will make Phootecles extract the text from the image and store it in its `inside text` attribute.
+
+Later if you are searching in your images for a particular term, Phootecles will search the image's `inside text` as well as it's `title` and `description` for occurrences of that term.
+
+Note: I use api `rapidapi.com/nadkabbani/api/ocrly-image-to-text/` to apply OCR to images and extract their text.
+
+TODO: Look for another api such as `Google Cloud` that doesn't give only 50 calls per month in the free trial.
+
+Note: The process of downloading an image and extracting its text through the aforementioned api run concurrently as I only the image url is sent to the api. I used Go routines to achieve this parallelism and gain performance increase as the api has around 3 seconds of latency.
 
 ### Configuring Phootecles
 
