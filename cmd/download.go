@@ -27,7 +27,7 @@ import (
 // downloadCmd represents the download command
 var downloadCmd = &cobra.Command{
 	Use:   "download",
-	Short: "A brief description of your command",
+	Short: "Use this command to download one or all images",
 	Long: `Use this command to download one image or all the images 
 in your collection. 
 
